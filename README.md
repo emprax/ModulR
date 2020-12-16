@@ -1,4 +1,4 @@
-# <img src=".\docs\ModulR-logo.png" width="20%" height="20%"> ModulR
+# <img src=".\docs\ModulR-logo.png" width="13%" height="13%"> ModulR
 ModulR is a factory pattern based, dependency injection module library to work with Microsoft ServiceCollection. It merges the concepts of the factory pattern and the module pattern (also available with the AutoFac dependency injection library) into a solution that provides more detailed control to how the dependencies are registered and accessed regarding your IoC container. 
 
 It is setup in a way that the container can find the regarding dependencies registered in a particular module by which it uses the main service/client/dependency that separates one module's domain from another as the access point. Therefore it does not encourage to use anti-patterns like the service-locator pattern. However, it provides the possibility to use a key on a factory, scoped to only a single type of dependency, to get a specific version of that dependency from a module. In short, you can access a specific version of the dependency from a particular module by choosing that module by the provided key.
