@@ -8,12 +8,22 @@
 
 It comes with the addition of another abstract-factory that can provide a single dependency available from multiple different modules where one can be chosen by the means of a key.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>ModulR-logo.png</PackageIcon>
+    <PackageProjectUrl>https://github.com/emprax/ModulR</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/emprax/ModulR</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.1.8" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.8" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\docs\ModulR-logo.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

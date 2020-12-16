@@ -2,6 +2,10 @@
 {
     public class OrderSharedService : ISharedService
     {
-        public string GetFrom() => "Hello from Order";
+        private readonly string parameter;
+
+        public OrderSharedService(string parameter) => this.parameter = parameter;
+
+        public string GetFrom() => $"Hello from Order, with: '{this.parameter}'";
     }
 }

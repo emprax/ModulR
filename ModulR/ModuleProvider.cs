@@ -1,5 +1,7 @@
 ﻿using System.Linq;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ModulR.Extensions;
 
 namespace ModulR
 {
@@ -11,15 +13,17 @@ namespace ModulR
 
         internal ModuleProvider(IServiceCollection services) => this.services = services;
 
-        public IServiceCollection From<TModule>() where TModule : class, IModule
+        public IServiceCollection From<TModule>() where TModule : class, IModule => this.From<TModule>(null);
+
+        public IServiceCollection From<TModule>(IConfiguration configuration) where TModule : class, IModule
         {
             var module = this.services.BuildServiceProvider().GetService<TModule>();
             if (module is null)
             {
-                this.services.AddSingleton<TModule>();
+                this.services.AddModule<TModule>(configuration);
             }
 
-            return this.services.AddTransient<TService, TImplementation>(provider => 
+            return this.services.AddTransient<TService, TImplementation>(provider =>
             {
                 var module = provider.GetService<TModule>() ?? throw new ModulRModuleNotFoundException(nameof(TModule));
                 
@@ -37,15 +41,17 @@ namespace ModulR
 
         internal ModuleProvider(IServiceCollection services) => this.services = services;
 
-        public IServiceCollection From<TModule>() where TModule : class, IModule
+        public IServiceCollection From<TModule>() where TModule : class, IModule => this.From<TModule>(null);
+
+        public IServiceCollection From<TModule>(IConfiguration configuration) where TModule : class, IModule
         {
             var module = this.services.BuildServiceProvider().GetService<TModule>();
-            if (module is null)
+            if (module is null && configuration is null)
             {
-                this.services.AddSingleton<TModule>();
+                this.services.AddModule<TModule>(configuration);
             }
 
-            return this.services.AddTransient(provider => 
+            return this.services.AddTransient(provider =>
             {
                 var module = provider.GetRequiredService<TModule>() ?? throw new ModulRModuleNotFoundException(nameof(TModule));
 

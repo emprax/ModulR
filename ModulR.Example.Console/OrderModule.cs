@@ -6,7 +6,7 @@ namespace ModulR.Example.Console
     {
         protected override void Configure(IServiceCollection services)
         {
-            services.AddTransient<ISharedService, OrderSharedService>();
+            services.AddTransient<ISharedService>(_ => new OrderSharedService(base.Configuration["Data:ModuleParameter"]));
         }
     }
 }

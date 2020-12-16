@@ -2,11 +2,11 @@
 
 namespace ModulR
 {
-    public class ModuleServiceProvider : IModuleServiceProvider
+    internal class ModuleServiceProvider : IModuleServiceProvider
     {
         private readonly IModule module;
 
-        public ModuleServiceProvider(IModule module) => this.module = module;
+        internal ModuleServiceProvider(IModule module) => this.module = module;
 
         public TService Get<TService>() where TService : class
         {

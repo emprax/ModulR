@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ModulR.Extensions;
 
@@ -10,8 +11,13 @@ namespace ModulR.Example.Console
         {
             var services = new ServiceCollection();
 
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Environment.CurrentDirectory)
+                .AddJsonFile("config.json", false, false)
+                .Build();
+
             // A
-            services.AddModule<OrderModule>();
+            services.AddModule<OrderModule>(configuration);
 
             // B
             services

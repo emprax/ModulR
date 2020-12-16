@@ -13,7 +13,7 @@ namespace ModulR.Example.Tests
             // Act & Assert
             Assert.Throws<ModulRModuleNotFoundException>(() => new ServiceCollection()
                 .BuildServiceProvider()
-                .FromModule<OrderModule>()
+                .FromModule<ArticleModule>()
                 .Get<ISharedService>());
         }
 
@@ -22,9 +22,9 @@ namespace ModulR.Example.Tests
         {
             // Act & Assert
             Assert.Throws<ModulRServiceNotFoundException>(() => new ServiceCollection()
-                .AddModule<OrderModule>()
+                .AddModule<ArticleModule>()
                 .BuildServiceProvider()
-                .FromModule<OrderModule>()
+                .FromModule<ArticleModule>()
                 .Get<IDummyService>());
         }
 
@@ -33,9 +33,9 @@ namespace ModulR.Example.Tests
         {
             // Act & Assert
             Assert.NotNull(new ServiceCollection()
-                .AddModule<OrderModule>()
+                .AddModule<ArticleModule>()
                 .BuildServiceProvider()
-                .FromModule<OrderModule>()
+                .FromModule<ArticleModule>()
                 .Get<ISharedService>());
         }
     }

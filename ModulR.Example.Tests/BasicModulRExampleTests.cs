@@ -11,9 +11,9 @@ namespace ModulR.Example.Tests
         public void ShouldAddModules()
         {
             // Arrange
-            var provider = this.Create(services =>
+            var provider = this.Create((services, configuration) =>
             {
-                services.AddModule<OrderModule>();
+                services.AddModule<OrderModule>(configuration);
                 services.AddModule<ArticleModule>();
             });
 
@@ -26,10 +26,10 @@ namespace ModulR.Example.Tests
         public void ShouldAddServiceByModule()
         {
             // Arrange
-            var provider = this.Create(services =>
+            var provider = this.Create((services, configuration) =>
             {
                 services
-                    .AddModule<OrderModule>()
+                    .AddModule<OrderModule>(configuration)
                     .AddModularClient<ISharedService>()
                     .From<ArticleModule>();
             });

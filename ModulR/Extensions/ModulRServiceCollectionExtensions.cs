@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ModulR.Extensions
@@ -8,6 +10,29 @@ namespace ModulR.Extensions
         public static IServiceCollection AddModule<TModule>(this IServiceCollection services) where TModule : class, IModule
         {
             return services.AddSingleton<TModule>();
+        }
+
+        public static IServiceCollection AddModule<TModule>(this IServiceCollection services, IConfiguration configuration) where TModule : class, IModule
+        {
+            services.AddSingleton<TModule>();
+            if (configuration is null)
+            {
+                return services;
+            }
+
+            var module = services
+                .BuildServiceProvider()
+                .GetRequiredService<TModule>();
+
+            var serviceDescriptor = services.FirstOrDefault(x => x.ServiceType == typeof(TModule));
+            if (serviceDescriptor != null)
+            {
+                services.Remove(serviceDescriptor);
+            }
+
+            return services
+                .AddSingleton(_ => module
+                .WithConfiguration(configuration) as TModule);
         }
 
         public static IModuleProvider<TService> AddModularClient<TService, TImplementation>(this IServiceCollection services) 
