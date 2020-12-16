@@ -1,0 +1,43 @@
+﻿using Microsoft.Extensions.DependencyInjection;
+using ModulR.Example.Console;
+using ModulR.Extensions;
+using Xunit;
+
+namespace ModulR.Example.Tests
+{
+    public class BasicModulRExampleTests : ModulRTestsBase
+    {
+        [Fact]
+        public void ShouldAddModules()
+        {
+            // Arrange
+            var provider = this.Create(services =>
+            {
+                services.AddModule<OrderModule>();
+                services.AddModule<ArticleModule>();
+            });
+
+            // Act & Assert
+            Assert.True(provider.GetRequiredService<OrderModule>()?.GetServiceProvider()?.GetService<ISharedService>() is OrderSharedService);
+            Assert.True(provider.GetRequiredService<ArticleModule>()?.GetServiceProvider()?.GetService<ISharedService>() is ArticleSharedService);
+        }
+
+        [Fact]
+        public void ShouldAddServiceByModule()
+        {
+            // Arrange
+            var provider = this.Create(services =>
+            {
+                services
+                    .AddModule<OrderModule>()
+                    .AddModularClient<ISharedService>()
+                    .From<ArticleModule>();
+            });
+
+            // Act & Assert
+            Assert.True(provider.GetRequiredService<OrderModule>()?.GetServiceProvider()?.GetService<ISharedService>() is OrderSharedService);
+            Assert.True(provider.GetRequiredService<ArticleModule>()?.GetServiceProvider()?.GetService<ISharedService>() is ArticleSharedService);
+            Assert.True(provider.GetRequiredService<ISharedService>() is ArticleSharedService);
+        }
+    }
+}
