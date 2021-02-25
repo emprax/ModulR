@@ -25,9 +25,9 @@ namespace ModulR
 
             return this.services.AddTransient<TService, TImplementation>(provider =>
             {
-                var module = provider.GetService<TModule>() ?? throw new ModulRModuleNotFoundException(nameof(TModule));
+                var otherModule = provider.GetService<TModule>() ?? throw new ModulRModuleNotFoundException(nameof(TModule));
                 
-                return module
+                return otherModule
                     .GetServiceProvider()
                     .GetServices<TService>()?
                     .FirstOrDefault(x => x is TImplementation) as TImplementation ?? throw new ModulRServiceNotFoundException(nameof(TImplementation));
@@ -53,9 +53,9 @@ namespace ModulR
 
             return this.services.AddTransient(provider =>
             {
-                var module = provider.GetRequiredService<TModule>() ?? throw new ModulRModuleNotFoundException(nameof(TModule));
+                var otherModule = provider.GetRequiredService<TModule>() ?? throw new ModulRModuleNotFoundException(nameof(TModule));
 
-                return module
+                return otherModule
                     .GetServiceProvider()
                     .GetService<TService>() ?? throw new ModulRServiceNotFoundException(nameof(TService));
             });

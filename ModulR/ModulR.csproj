@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFrameworks>netstandard2.0;netstandard2.1;net50</TargetFrameworks>
     <Authors>Emprax</Authors>
     <Company>Emprax</Company>
     <Description>A factory pattern based, dependency injection module library to work with the Microsoft ServiceCollection. It provides the possiblity to create modules to register groups of dependencies separately. 
@@ -13,6 +13,7 @@ It comes with the addition of another abstract-factory that can provide a single
     <RepositoryUrl>https://github.com/emprax/ModulR</RepositoryUrl>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <NeutralLanguage />
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
