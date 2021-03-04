@@ -52,7 +52,7 @@ services.AddModule<OrderingModule>();
 Notice that the OrderingModule needs an IConfiguration instance as it uses it to access settings (in the example it regards the calls to base.Configuration[...]). The Module abstract class provides the .WithConfiguration(IConfiguration configuration) method that can be used to provide the IConfiguration instance. However, the registration extensions can do this for you. When you need to use this, you can simply provide it to the extension method.
 
 | :exclamation: **Note**                                       |
-| ------------------------------------------------------------ |
+| :------------------------------------------------------------ |
 | With the .AddModule<TModule>() and .AddModule<TModule>(IConfiguration) methods, the only thing that is registered is a singleton instance of the module. Now you might question its use-case, but this type of registration is useful for other cases that this library provides and will be touched upon further down this document. |
 
 We are now going to define an access point to a service/client which is made available by the module. We will show two cases.
@@ -79,11 +79,11 @@ In the context of *Case 1*, OrderingModule is not yet registered, though, will b
 In the context *Case 2*, OrderingModule is first registered (with the configuration) and where after next the client will be registered that comes from the module. However, now the configuration input is no longer needed in the .From<TModule>(...) method, because the .AddModule<TModule>(...) method has already provided this.
 
 | :exclamation: **Note**                                       |
-| ------------------------------------------------------------ |
+| :------------------------------------------------------------ |
 | When the .AddModularClient extension is used twice in a row for the same client/service, the main DI service-provider will always return the instance of that client/service that was registered last. This has nothing to do with the library, but rather with how IServiceCollection works. By default, IServiceCollection can only register one instance of a particular type of service/client at the time. Nevertheless, all the modules that are referenced with all the times that .AddModuleClient is used in the main DI and followed directly up by calling the .From<TModule>() method, will all be registered when not already existing. |
 
 | :exclamation: **Note**                                       |
-| ------------------------------------------------------------ |
+| :------------------------------------------------------------ |
 | There is also an .AddModularClient<TService, TImplementation>() method, which registers a specific version of the *TService* in the form of *TImplementation*. |
 
 Finally there is the possibility to create a factory that can provide a specific version of a specified service/client/dependency by the means of a key, which corresponds to a specific module.
@@ -102,7 +102,7 @@ services
 The .AddModulRFactoryForService<TKey, TService>(...) method provides the possibility to define a builder to create the structure to provide multiple versions of the ISharedService through these modules. In this example, both the versions are registered, one in the OrderingModule and one in the ArticleModule. By the means of a dedicated key you can select the corresponding module and get the desired version of ISharedService.
 
 | :exclamation: **Note**                                       |
-| ------------------------------------------------------------ |
+| :------------------------------------------------------------ |
 | The .AddModule<ArticleModule>() method is required to register the module and make it available for the registry. Within this example, we assume that we already registered the OrderingModule, though, not explicitly visible in this example. |
 
 A IModulRServiceProviderFactory<TKey, TService> instance is created that can be used to get the right version of the service.
