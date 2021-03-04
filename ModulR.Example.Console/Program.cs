@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ModulR.Extensions;
 
 namespace ModulR.Example.Console
 {
@@ -25,12 +24,11 @@ namespace ModulR.Example.Console
                 .From<ArticleModule>();
             
             // C
-            services.AddModuleRFactoryForService<string, ISharedService>((key, registry) => 
+            services.AddModuleRFactoryForService<string, ISharedService>((registry) => 
             {
-                return registry
+                registry
                     .OnKey("Order").FromModule<OrderModule>()
-                    .OnKey("Article").FromModule<ArticleModule>()
-                    .Provide(key);
+                    .OnKey("Article").FromModule<ArticleModule>();
             });
 
             // GO!

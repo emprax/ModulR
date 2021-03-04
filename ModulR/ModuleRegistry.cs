@@ -17,7 +17,7 @@ namespace ModulR
 
         public IModuleRegistryElement<TKey, TService> OnKey(TKey key) => new ModuleRegistryElement<TKey, TService>(this, this.dictionary, key);
 
-        public TService Provide(TKey key)
+        internal TService Provide(TKey key)
         {
             return (this.dictionary.TryGetValue(key, out var invoker) && invoker != null)
                 ? invoker.Invoke(this.provider) ?? throw new ModulRServiceNotFoundException(nameof(TService))

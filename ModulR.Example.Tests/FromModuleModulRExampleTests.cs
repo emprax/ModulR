@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using ModulR.Example.Console;
-using ModulR.Extensions;
 using Xunit;
 
 namespace ModulR.Example.Tests
