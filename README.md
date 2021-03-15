@@ -9,6 +9,10 @@ ModulR is a factory pattern based, dependency injection module library to work w
 
 It is setup in a way that the container can find the related dependencies registered in a particular module. The library utilizes the main service/client/dependency that separates one module's domain from another as the access point. Therefore it does not encourage to use anti-patterns like the service-locator pattern. However, it provides the possibility to use a factory, which works as some sort of service locator where a key is used to find the right service implemented by the right module. Nevertheless The factory is scoped to only a single type of dependency and to get a specific version of that dependency from a module. In short, you can access a specific version of the dependency from a particular module by choosing that module by a key.
 
+| :exclamation: **Note**                                       |
+| :----------------------------------------------------------- |
+| From version 2.0.0 onward the *Module* abstract class implementation uses custom a service-collection and service-provider which discards the tedious extra dependency registrations that are needed to get the dependencies that otherwise registered by other service-collections. So the *.AddModule<TModule>(...)*-like extensions do not have to be called in every module to get shared dependencies. However, the main service-collection (in the DI main) still has to do this, because it otherwise does not know where to get the dependencies from that originate from modules. This new feature actually uses the main service-provider from the main service-collection, so it is recommended to register the modules and certain dependencies from other modules in the main DI. What is also possible is that when the main service-collection only adds the modules, then the modules themselves only need to use a *FromModule<TModule>(...)* call to get the requested dependencies. |
+
 
 
 ## Setting up the module

@@ -27,7 +27,7 @@ namespace ModulR
                 var otherModule = provider.GetService<TModule>() ?? throw new ModulRModuleNotFoundException(nameof(TModule));
                 
                 return otherModule
-                    .GetServiceProvider()
+                    .GetServiceProvider(provider)
                     .GetServices<TService>()?
                     .FirstOrDefault(x => x is TImplementation) as TImplementation ?? throw new ModulRServiceNotFoundException(nameof(TImplementation));
             });
@@ -55,7 +55,7 @@ namespace ModulR
                 var otherModule = provider.GetRequiredService<TModule>() ?? throw new ModulRModuleNotFoundException(nameof(TModule));
 
                 return otherModule
-                    .GetServiceProvider()
+                    .GetServiceProvider(provider)
                     .GetService<TService>() ?? throw new ModulRServiceNotFoundException(nameof(TService));
             });
         }

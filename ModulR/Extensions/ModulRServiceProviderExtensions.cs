@@ -13,7 +13,7 @@ namespace ModulR
         /// <returns>IModuleServiceProvider.</returns>
         public static IModuleServiceProvider FromModule<TModule>(this IServiceProvider provider) where TModule : class, IModule
         {
-            return new ModuleServiceProvider(provider.GetService<TModule>());
+            return new ModuleServiceProvider(provider.GetService<TModule>(), provider);
         }
     }
 }

@@ -29,7 +29,7 @@ namespace ModulR
                     var module = provider.GetService<TModule>() ?? throw new ModulRModuleNotFoundException(nameof(TModule));
                     
                     return module
-                        .GetServiceProvider()
+                        .GetServiceProvider(provider)
                         .GetService<TService>() ?? throw new ModulRServiceNotFoundException(nameof(TService));
                 });
             }

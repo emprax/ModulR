@@ -23,7 +23,8 @@ namespace ModulR
         /// <summary>
         /// Creates the IServiceProvider regarding the registered dependencies within this module.
         /// </summary>
+        /// <param name="supplimentaryProvider">The service-provider from the main DI container.</param>
         /// <returns>IServiceProvider.</returns>
-        IServiceProvider GetServiceProvider();
+        IServiceProvider GetServiceProvider(IServiceProvider supplimentaryProvider);
     }
 }

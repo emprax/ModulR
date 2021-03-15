@@ -15,6 +15,8 @@ namespace ModulR.Example.Console
                 .AddJsonFile("config.json", false, false)
                 .Build();
 
+            services.AddTransient<ISomeNewService, SomeNewService>();
+
             // A
             services.AddModule<OrderModule>(configuration);
 
@@ -49,14 +51,30 @@ namespace ModulR.Example.Console
                 .GetFrom();
 
             var result4 = provider
-                .FromModule<ArticleModule>()
+                .FromModule<OrderModule>()
                 .Get<ISharedService>()
                 .GetFrom();
 
+            var result5 = provider
+                .FromModule<OrderModule>()
+                .Get<IOrderNewService>()
+                .GetFrom();
+
             System.Console.WriteLine($"Result 1:  {result1}.");
-            System.Console.WriteLine($"Result 1:  {result2}.");
-            System.Console.WriteLine($"Result 1:  {result3}.");
-            System.Console.WriteLine($"Result 1:  {result4}.");
+            System.Console.WriteLine($"Result 2:  {result2}.");
+            System.Console.WriteLine($"Result 3:  {result3}.");
+            System.Console.WriteLine($"Result 4:  {result4}.");
+            System.Console.WriteLine($"Result 5:  {result5}.");
         }
+    }
+
+    public interface ISomeNewService
+    {
+        string GetFrom();
+    }
+
+    public class SomeNewService : ISomeNewService
+    {
+        public string GetFrom() => "Some new service";
     }
 }

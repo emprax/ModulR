@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,9 +11,14 @@ namespace ModulR
     public abstract class Module : IModule
     {
         private readonly IServiceCollection services;
+        private readonly ConcurrentDictionary<int, ServiceDescriptor> core;
         private IServiceProvider provider;
         
-        protected Module() => this.services = new ServiceCollection();
+        protected Module()
+        {
+            this.core = new ConcurrentDictionary<int, ServiceDescriptor>();
+            this.services = new ModulRServiceCollection(core);
+        }
 
         /// <summary>
         /// Configuration that is shared with the module.
@@ -28,13 +34,14 @@ namespace ModulR
         /// <summary>
         /// Creates the IServiceProvider regarding the registered dependencies within this module.
         /// </summary>
+        /// <param name="supplimentaryProvider">The service-provider from the main DI container.</param>
         /// <returns>IServiceProvider.</returns>
-        public IServiceProvider GetServiceProvider()
+        public IServiceProvider GetServiceProvider(IServiceProvider supplimentaryProvider)
         {
             if (this.provider is null)
             {
                 this.Configure(this.services);
-                this.provider = this.services.BuildServiceProvider();
+                this.provider = new ModulRServiceProvider(supplimentaryProvider, this.core);
             }
 
             return this.provider;

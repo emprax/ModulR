@@ -17,8 +17,8 @@ namespace ModulR.Example.Tests
             });
 
             // Act & Assert
-            Assert.True(provider.GetRequiredService<OrderModule>()?.GetServiceProvider()?.GetService<ISharedService>() is OrderSharedService);
-            Assert.True(provider.GetRequiredService<ArticleModule>()?.GetServiceProvider()?.GetService<ISharedService>() is ArticleSharedService);
+            Assert.True(provider.GetRequiredService<OrderModule>()?.GetServiceProvider(provider)?.GetService<ISharedService>() is OrderSharedService);
+            Assert.True(provider.GetRequiredService<ArticleModule>()?.GetServiceProvider(provider)?.GetService<ISharedService>() is ArticleSharedService);
         }
 
         [Fact]
@@ -34,8 +34,8 @@ namespace ModulR.Example.Tests
             });
 
             // Act & Assert
-            Assert.True(provider.GetRequiredService<OrderModule>()?.GetServiceProvider()?.GetService<ISharedService>() is OrderSharedService);
-            Assert.True(provider.GetService<ArticleModule>()?.GetServiceProvider()?.GetService<ISharedService>() is ArticleSharedService);
+            Assert.True(provider.GetRequiredService<OrderModule>()?.GetServiceProvider(provider)?.GetService<ISharedService>() is OrderSharedService);
+            Assert.True(provider.GetService<ArticleModule>()?.GetServiceProvider(provider)?.GetService<ISharedService>() is ArticleSharedService);
             Assert.True(provider.GetRequiredService<ISharedService>() is ArticleSharedService);
         }
     }
