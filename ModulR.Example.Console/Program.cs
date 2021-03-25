@@ -6,7 +6,7 @@ namespace ModulR.Example.Console
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static void Main(string[] _)
         {
             var services = new ServiceCollection();
 
@@ -22,7 +22,7 @@ namespace ModulR.Example.Console
 
             // B
             services
-                .AddModularClient<ISharedService>()
+                .AddTransitientModularClient<ISharedService>()
                 .From<ArticleModule>();
             
             // C
@@ -66,15 +66,5 @@ namespace ModulR.Example.Console
             System.Console.WriteLine($"Result 4:  {result4}.");
             System.Console.WriteLine($"Result 5:  {result5}.");
         }
-    }
-
-    public interface ISomeNewService
-    {
-        string GetFrom();
-    }
-
-    public class SomeNewService : ISomeNewService
-    {
-        public string GetFrom() => "Some new service";
     }
 }

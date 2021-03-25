@@ -50,11 +50,11 @@ namespace ModulR
         /// <typeparam name="TImplementation">Type of the concrete implementation of the client.</typeparam>
         /// <param name="services">IServiceCollection.</param>
         /// <returns>IModuleProvider.</returns>
-        public static IModuleProvider<TService> AddModularClient<TService, TImplementation>(this IServiceCollection services) 
+        public static IModuleProvider<TService> AddModularClient<TService, TImplementation>(this IServiceCollection services, ServiceLifetime serviceLifetime)
             where TService : class 
             where TImplementation : class, TService
         {
-            return new ModuleProvider<TService, TImplementation>(services);
+            return new ModuleProvider<TService, TImplementation>(services, serviceLifetime);
         }
 
         /// <summary>
@@ -62,10 +62,44 @@ namespace ModulR
         /// </summary>
         /// <typeparam name="TService">Type of the client.</typeparam>
         /// <param name="services">IServiceCollection.</param>
+        /// <param name="serviceLifetime">The service lifetime that is used to register the service with type <typeparamref name="TService"/>.</param>
         /// <returns>IModuleProvider.</returns>
-        public static IModuleProvider<TService> AddModularClient<TService>(this IServiceCollection services) where TService : class 
+        public static IModuleProvider<TService> AddModularClient<TService>(this IServiceCollection services, ServiceLifetime serviceLifetime) where TService : class 
         {
-            return new ModuleProvider<TService>(services);
+            return new ModuleProvider<TService>(services, serviceLifetime);
+        }
+
+        /// <summary>
+        /// Creating a module directly for a client in transitient fashion.
+        /// </summary>
+        /// <typeparam name="TService">Type of the client.</typeparam>
+        /// <param name="services">IServiceCollection.</param>
+        /// <returns>IModuleProvider.</returns>
+        public static IModuleProvider<TService> AddTransitientModularClient<TService>(this IServiceCollection services) where TService : class 
+        {
+            return services.AddModularClient<TService>(ServiceLifetime.Transient);
+        }
+
+        /// <summary>
+        /// Creating a module directly for a client in scoped fashion.
+        /// </summary>
+        /// <typeparam name="TService">Type of the client.</typeparam>
+        /// <param name="services">IServiceCollection.</param>
+        /// <returns>IModuleProvider.</returns>
+        public static IModuleProvider<TService> AddScopedModularClient<TService>(this IServiceCollection services) where TService : class 
+        {
+            return services.AddModularClient<TService>(ServiceLifetime.Scoped);
+        }
+
+        /// <summary>
+        /// Creating a module directly for a client in singleton fashion.
+        /// </summary>
+        /// <typeparam name="TService">Type of the client.</typeparam>
+        /// <param name="services">IServiceCollection.</param>
+        /// <returns>IModuleProvider.</returns>
+        public static IModuleProvider<TService> AddSingletonModularClient<TService>(this IServiceCollection services) where TService : class 
+        {
+            return services.AddModularClient<TService>(ServiceLifetime.Singleton);
         }
 
         /// <summary>

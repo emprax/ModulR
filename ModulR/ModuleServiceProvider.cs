@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace ModulR
 {
@@ -14,10 +13,12 @@ namespace ModulR
             this.supplimentaryProvider = supplimentaryProvider;
         }
 
-        public TService Get<TService>() where TService : class
+        public TService Get<TService>() where TService : class => this.Get(typeof(TService)) as TService;
+
+        public object Get(Type service)
         {
             var provider = this.module?.GetServiceProvider(this.supplimentaryProvider) ?? throw new ModulRModuleNotFoundException(nameof(this.module));
-            return provider.GetService<TService>() ?? throw new ModulRServiceNotFoundException(typeof(TService).Name);
+            return provider.GetService(service) ?? throw new ModulRServiceNotFoundException(service.Name);
         }
     }
 }

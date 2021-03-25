@@ -20,7 +20,7 @@ namespace ModulR
         /// Providing a module based on its class type and attaching the configuration.
         /// </summary>
         /// <typeparam name="TModule">Type of the module.</typeparam>
-        /// /// <param name="configuration">The shared configuration.</param>
+        /// <param name="configuration">The shared configuration.</param>
         /// <returns>IServiceCollection.</returns>
         IServiceCollection From<TModule>(IConfiguration configuration) where TModule : class, IModule;
     }

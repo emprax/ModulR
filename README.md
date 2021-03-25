@@ -64,7 +64,7 @@ We are now going to define an access point to a service/client which is made ava
 ```c#
 // Case 1:
 services
-    .AddModularClient<IOwnOrderService>()
+    .AddModularClient<IOwnOrderService>(ServiceLifetime.Transient)
     .From<OrderingModule>(configuration);
 ```
 
@@ -72,7 +72,7 @@ services
 // Case 2:
 services
     .AddModule<OrderingModule>(configuration)
-    .AddModularClient<IOwnOrderService>()
+    .AddTransientModularClient<IOwnOrderService>()
     .From<OrderingModule>();
 ```
 
@@ -80,15 +80,19 @@ First, let *Case 1* and *Case 2* both be separate executions which both use a cl
 
 In the context of *Case 1*, OrderingModule is not yet registered, though, will be done by the .From<TModule>(...) method. That is also why the IConfiguration instance needs to be passed down into this method. Now when stumbling upon the IOwnOrderService instance in the main dependency injection registration location of the application, we will see that the service is retrieved from the OrderingModule and all the dependencies of OwnOrderService, and the dependencies of these dependencies and so on, that are registered in that module. 
 
+> Take notice of the *AddModularClient<TService>(...)*, it requires a service-lifetime.
+
 In the context *Case 2*, OrderingModule is first registered (with the configuration) and where after next the client will be registered that comes from the module. However, now the configuration input is no longer needed in the .From<TModule>(...) method, because the .AddModule<TModule>(...) method has already provided this.
+
+> Take notice of the *AddTransientModularClient<TService>()*, it is an override of the *AddModularClient<TService>(...)* which sets the transient service-lifetime. There are also versions for singleton and scoped lifetimes.
 
 | :exclamation: **Note**                                       |
 | :------------------------------------------------------------ |
 | When the .AddModularClient extension is used twice in a row for the same client/service, the main DI service-provider will always return the instance of that client/service that was registered last. This has nothing to do with the library, but rather with how IServiceCollection works. By default, IServiceCollection can only register one instance of a particular type of service/client at the time. Nevertheless, all the modules that are referenced with all the times that .AddModuleClient is used in the main DI and followed directly up by calling the .From<TModule>() method, will all be registered when not already existing. |
 
 | :exclamation: **Note**                                       |
-| :------------------------------------------------------------ |
-| There is also an .AddModularClient<TService, TImplementation>() method, which registers a specific version of the *TService* in the form of *TImplementation*. |
+| :----------------------------------------------------------- |
+| There is also an .AddModularClient<TService, TImplementation>(...) method, which registers a specific version of the *TService* in the form of *TImplementation*. |
 
 Finally there is the possibility to create a factory that can provide a specific version of a specified service/client/dependency by the means of a key, which corresponds to a specific module.
 

@@ -13,7 +13,7 @@ It comes with the addition of another abstract-factory that can provide a single
     <RepositoryUrl>https://github.com/emprax/ModulR</RepositoryUrl>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <NeutralLanguage />
-    <Version>2.0.0</Version>
+    <Version>2.1.0</Version>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 

@@ -29,7 +29,7 @@ namespace ModulR.Example.Tests
             {
                 services
                     .AddModule<OrderModule>(configuration)
-                    .AddModularClient<ISharedService>()
+                    .AddModularClient<ISharedService>(ServiceLifetime.Transient)
                     .From<ArticleModule>();
             });
 

@@ -1,4 +1,6 @@
-﻿namespace ModulR
+﻿using System;
+
+namespace ModulR
 {
     /// <summary>
     /// A module specific service-provider. Contains logic to handle module and service provisioning.
@@ -14,5 +16,12 @@
         /// <typeparam name="TService">Type of the service to retrieve from the module.</typeparam>
         /// <returns>The requested service.</returns>
         TService Get<TService>() where TService : class;
+
+        /// <summary>
+        /// Providing the requested service from the module.
+        /// </summary>
+        /// <param name="service">Type of the service to retrieve from the module.</param>
+        /// <returns>The requested service.</returns>
+        object Get(Type service);
     }
 }
