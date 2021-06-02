@@ -1,9 +1,7 @@
 # <img src=".\docs\ModulR-logo.png" width="13%" height="13%"> ModulR
 
-![Nuget](https://img.shields.io/nuget/v/ModulR?color=green&style=plastic)
-
 NuGet package pages:
-- [ModulR](https://www.nuget.org/packages/ModulR/)
+- [ModulR](https://www.nuget.org/packages/ModulR/) ![Nuget](https://img.shields.io/nuget/v/ModulR?color=green&style=plastic)
 
 ModulR is a factory pattern based, dependency injection module library to work with Microsoft's ServiceCollection. It combines the concepts of both the factory pattern and the module pattern (also available with the AutoFac dependency injection library) and creates a solution that provides more detailed control on how the dependencies are registered and accessed by the IoC container. 
 
